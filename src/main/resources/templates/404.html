@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="utf-8" />
+    <title>
+        IPTChain区块浏览器
+</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+      <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/css/zdy.css">
+    <link rel="stylesheet" href="/css/qunit-1.11.0.css">
+
+
+  </head>
+  <body>
+
+  <header id="qdb-head">
+    <div th:replace="~{head :: head}">...</div>
+  </header>
+
+    <div class="page-header" style="height: 400px">
+        <h1 style='vertical-align: middle;text-align:center;'>NOT FOUND!</h1>
+    </div>
+
+    <div id="qdb-foot">
+      <div th:replace="~{foot :: foot}">...</div>
+    </div>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap-paginator.js"></script>
+    <script src="/js/qunit-1.11.0.js"></script>
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"></script>
+
+  </body>
+</html>

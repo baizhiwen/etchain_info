@@ -1,0 +1,44 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.7.RELEASE'
+	}
+	// 自定义  Thymeleaf 和 Thymeleaf Layout Dialect 的版本
+	ext['thymeleaf.version'] = '3.0.7.RELEASE'
+	ext['thymeleaf-layout-dialect.version'] = '2.2.2'
+	repositories {
+		maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+springBoot {
+	executable = true
+}
+
+group = 'com'
+sourceCompatibility = 1.8
+
+repositories {
+	maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+
+	compile ('org.apache.httpcomponents:httpclient:4.5.3')
+	compile ('net.sf.json-lib:json-lib:2.4:jdk15')
+	compile ('com.google.code.gson:gson:2.8.1')
+
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="utf-8"/>
+  <title>
+    IPTChain区块浏览器
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Bootstrap -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/zdy.css">
+  <link rel="stylesheet" href="css/qunit-1.11.0.css">
+  <style>
+    .info th
+    {
+      color: white;
+    }
+  </style>
+
+</head>
+<body>
+
+<header id="qdb-head">
+  <div th:replace="~{head :: head}">...</div>
+</header>
+
+
+<div id="content">
+  <div class="container">
+
+
+    <div class="row">
+      <div class="col-lg-12 btn-lg">
+        <ul class="breadcrumb">
+          <li><a href="/">首页</a> <span class="divider"></span></li>
+          <li class="active">地址</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 clearfix">
+        <div>
+          <input type="hidden" name="pages" th:value="${pages}"/>
+          <input type="hidden" name="currentPage" th:value="${currentPage}"/>
+          <ul class="pagination" id='pagination'></ul>
+        </div>
+      </div>
+
+      <div class="col-lg-12 clearfix">
+        <div class="address_s">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr class='info'>
+                <th style='width:30%;vertical-align: middle;text-align: center;'>地址</th>
+                <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>最新交易时间</th>
+                <th style='width:10%;vertical-align: middle;text-align: center;'>交易次数</th>
+                <th class="hidden-xs" style='vertical-align: middle;text-align: center;'>地址生成时间</th>
+                <th style='width:10%;vertical-align: middle;text-align: center;'>资产数</th>
+                <th style='width:15%;vertical-align: middle;text-align: center;'>IPT量</th>
+              </tr>
+            </thead>
+            <tbody id="addressInfoTbody">
+              <tr th:each="address,addressStat : ${addresses}" th:class="${addressStat.index % 2 == 0} ?  'white' : 'active'">
+                <td class='col-md-3' style='vertical-align: middle;text-align: center;'><a th:text="${address.id}" th:href="${'address/'+address.id}"></a></td>
+                <td class='col-md-2' style='vertical-align: middle;text-align: center;' th:text="${#dates.format(address.lastTime*1000,'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td class='col-md-1' style='vertical-align: middle;text-align: center;' th:text="${#lists.size(address.transactions)}"></td>
+                <td class='col-md-2' style='vertical-align: middle;text-align: center;' th:text="${#dates.format(address.createTime*1000,'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td class='col-md-1' style='vertical-align: middle;text-align: center;' th:text="${#lists.size(address.assets)}"></td>
+                <td class='col-md-2' style='vertical-align: middle;text-align: center;' th:text="0"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<div id="qdb-foot">
+  <div th:replace="~{foot :: foot}">...</div>
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap-paginator.js"></script>
+<script src="js/qunit-1.11.0.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment-with-locales.min.js"></script>
+<script>
+    moment.locale("zh-CN");
+</script>
+
+<script type="text/javascript">
+    $(function (){
+        var pages = $("input[name='pages']").val();
+        var currentPage = $("input[name='currentPage']").val();
+        var element = $('#pagination');
+        var options = {
+            bootstrapMajorVersion: 3,
+            currentPage: currentPage,
+            numberOfPages: 10,
+            totalPages: pages,
+            size: "large",
+            alignment: "Center",
+            itemTexts: function (type, page, current) {
+                switch (type) {
+                    case "first":
+                        return "第一页";
+                    case "prev":
+                        return "前一页";
+                    case "next":
+                        return "后一页";
+                    case "last":
+                        return "最后一页";
+                    case "page":
+                        return page;
+                }
+            }, onPageClicked: function (event, originalEvent, type, page) { //换页
+                window.location.href="address?pageNumber="+page;
+            },
+        };
+        element.bootstrapPaginator(options);
+    });
+
+</script>
+
+
+</body>
+</html>
